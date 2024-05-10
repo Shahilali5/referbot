@@ -3,10 +3,10 @@ name: Notify via Telegram
 on:
   push:
     branches:
-      - main  # or any branch you want to trigger this action
+      - main  # Trigger this action on pushes to the main branch
 
 jobs:
-  notification:
+  send-notification:
     runs-on: ubuntu-latest
     steps:
       - name: Send Telegram Notification
@@ -14,4 +14,4 @@ jobs:
           curl -X POST \
             "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage" \
             -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=🚀 New push to ${{ github.ref }} by ${{ github.actor }}. Commit message: ${{ github.event.head_commit.message }}"
+            -d "text=🚀 New push to ${{ github.ref }} by ${{ github.actor }}. Commit message: '${{ github.event.head_commit.message }}'"
